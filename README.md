@@ -120,16 +120,6 @@ The compiler generates:
 
 ---
 
-## Tech Stack (Recommended)
-
-- React / Next.js (UI + rendering layer)
-- TypeScript (core logic)
-- Canvas / WebGL (preview engine)
-- Zustand / Redux (state management)
-- TailwindCSS (UI system)
-
----
-
 ## Vision
 
 This tool acts as a bridge between:
