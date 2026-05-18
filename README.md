@@ -1,140 +1,73 @@
-# Roblox UI Motion Studio
+# React + TypeScript + Vite
 
-A web-based visual animation editor designed for Roblox developers to replace manual TweenService scripting with a full visual workflow.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-It combines a Figma/After Effects-like experience with a Roblox-accurate UI rendering engine and a Luau code compiler.
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Core Concept
+## React Compiler
 
-Instead of writing complex TweenService logic manually, developers:
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-1. Build UI structure visually
-2. Animate it on a timeline
-3. Preview Roblox-accurate playback at 60 FPS
-4. Export optimized Luau code instantly
+## Expanding the ESLint configuration
 
----
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## System Overview
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### 1. UI Hierarchy (Explorer System)
-A Roblox Studio-style tree editor for UI objects.
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-- Create Frames, Buttons, TextLabels, Icons
-- Nest elements hierarchically
-- Control inheritance of animations (parent → child propagation)
-- Independent or grouped animation behaviors
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
----
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-### 2. Preview Engine (60 FPS Simulation Canvas)
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-A custom React-based renderer that replicates Roblox UI behavior:
-
-- AnchorPoint-based positioning
-- Scale + Offset resolution system
-- Real-time animation playback
-- Frame-accurate simulation loop
-
-This ensures exported animations behave identically in Roblox Studio.
-
----
-
-### 3. Multi-Lane Timeline Sequencer
-
-A professional animation timeline inspired by video editing software.
-
-Supports:
-
-- Multi-object animation lanes
-- Keyframe dragging and snapping
-- Staggered animation sequencing
-- Property tracks:
-  - Position
-  - Size
-  - Rotation
-  - Transparency
-  - BackgroundColor
-  - BorderColor
-  - TextSize
-  - TextTransparency
-
----
-
-### 4. Advanced Easing System
-
-Supports Roblox easing styles:
-
-- Quad, Cubic, Quint
-- Bounce, Elastic, Back, Sine
-
-Extended feature:
-
-- Cubic Bézier Curve Editor
-  - Custom velocity shaping
-  - Fine-grained motion control beyond Roblox defaults
-
----
-
-### 5. Target Inspector Panel
-
-Precision control system for animation data:
-
-- Define initial UI state
-- Edit keyframe-level values
-- Direct numeric control over all animation parameters
-- Property validation aligned with Roblox constraints
-
----
-
-### 6. Luau Code Compiler (Exporter)
-
-The core compiler translates timeline data into optimized Roblox scripts.
-
-It performs:
-
-- TweenInfo synthesis
-- Keyframe interpolation resolution
-- Animation grouping optimization
-- Clean Luau generation
-
-### Export formats:
-- LocalScript
-- Reusable function
-- ModuleScript
-
-Output is production-ready for Roblox Studio with no manual edits required.
-
----
-
-## Output Example
-
-The compiler generates:
-
-- TweenService setup
-- Clean animation loops
-- Optimized property transitions
-- Structured reusable code blocks
-
----
-
-## Vision
-
-This tool acts as a bridge between:
-
-- UI/UX design tools (Figma, After Effects)
-- Game engine scripting (Roblox Studio)
-
-It removes repetitive animation coding and replaces it with deterministic visual authoring.
-
----
-
-## Future Extensions
-
-- Roblox Studio plugin sync
-- Cloud animation storage
-- Collaboration mode (multi-user timelines)
-- Marketplace for animation presets
-- Real-time Roblox live preview integration
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
